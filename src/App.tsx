@@ -3,6 +3,7 @@ import './App.css';
 import ToDo, { TaskType } from './Components/ToDo/ToDo';
 import IteractButtons from './Components/IteractButtons/IteractButtons';
 import deepcopy from 'deepcopy';
+import { addToList, DeleteChecked } from './Components/helper/CruD';
 
 function App() {
   const [addTask, setAddTask] = useState({
@@ -12,32 +13,17 @@ function App() {
   });
 
   const [tasks, setTasks]: (TaskType[] | any)[] = useState([]);
-  const ResetID = (tasks: TaskType[]) => {
-    const copy = tasks.map((task: TaskType, id: number) => {
-      return {
-        ...task,
-        id,
-      };
-    });
-    setTasks(copy);
-  };
 
-  const addToList = (tasks: TaskType[], task: TaskType) => {
-    let copy = deepcopy(tasks);
-    task.id = copy.length;
-    copy.push(task);
-    setTasks(copy);
-  };
+  const [isAllSelected, setIsAllSelected]: (boolean | any)[] = useState(false);
 
-  const DeleteChecked = (tasks: TaskType[]) => {
-    let tasksCopy: TaskType[] = [];
+  useEffect(() => {
+    setIsAllSelected(true);
     tasks.map((task: TaskType) => {
       if (!task.isCompleted) {
-        tasksCopy.push(task);
+        setIsAllSelected(false);
       }
     });
-    ResetID(tasksCopy);
-  };
+  }, [tasks]);
 
   return (
     <>
@@ -45,8 +31,11 @@ function App() {
         addToList={addToList}
         addTask={addTask}
         setAddTask={setAddTask}
+        setTasks={setTasks}
         DeleteChecked={DeleteChecked}
         tasks={tasks}
+        isAllSelected={isAllSelected}
+        setIsAllSelected={setIsAllSelected}
       />
       <ToDo tasks={tasks} setTasks={setTasks} />
     </>

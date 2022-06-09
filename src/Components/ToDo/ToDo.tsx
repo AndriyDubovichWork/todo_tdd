@@ -1,3 +1,4 @@
+import { Checkbox, FormControlLabel } from '@mui/material';
 import React from 'react';
 
 export type TaskType = {
@@ -34,17 +35,19 @@ const ToDo = ({ tasks, setTasks }: ToDoType) => {
     <>
       {tasks.map((task: TaskType) => {
         return (
-          <div key={task.id} className='column'>
-            <input
-              type={'checkbox'}
-              checked={task.isCompleted}
-              onChange={() => {
-                isCheckedHandler(task.id, tasks);
-              }}
-              key={task.id}
-            />
-            <label>{task.text}</label>
-          </div>
+          <FormControlLabel
+            key={task.id}
+            label={task.text}
+            className='column'
+            control={
+              <Checkbox
+                checked={task.isCompleted}
+                onChange={() => {
+                  isCheckedHandler(task.id, tasks);
+                }}
+              />
+            }
+          ></FormControlLabel>
         );
       })}
     </>
