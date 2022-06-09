@@ -1,25 +1,55 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import ToDo, { TaskType } from './Components/ToDo/ToDo';
+import IteractButtons from './Components/IteractButtons/IteractButtons';
+import deepcopy from 'deepcopy';
 
 function App() {
+  const [addTask, setAddTask] = useState({
+    text: '',
+    id: 404,
+    isCompleted: false,
+  });
+
+  const [tasks, setTasks]: (TaskType[] | any)[] = useState([]);
+  const ResetID = (tasks: TaskType[]) => {
+    const copy = tasks.map((task: TaskType, id: number) => {
+      return {
+        ...task,
+        id,
+      };
+    });
+    setTasks(copy);
+  };
+
+  const addToList = (tasks: TaskType[], task: TaskType) => {
+    let copy = deepcopy(tasks);
+    task.id = copy.length;
+    copy.push(task);
+    setTasks(copy);
+  };
+
+  const DeleteChecked = (tasks: TaskType[]) => {
+    let tasksCopy: TaskType[] = [];
+    tasks.map((task: TaskType) => {
+      if (!task.isCompleted) {
+        tasksCopy.push(task);
+      }
+    });
+    ResetID(tasksCopy);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <IteractButtons
+        addToList={addToList}
+        addTask={addTask}
+        setAddTask={setAddTask}
+        DeleteChecked={DeleteChecked}
+        tasks={tasks}
+      />
+      <ToDo tasks={tasks} setTasks={setTasks} />
+    </>
   );
 }
 
