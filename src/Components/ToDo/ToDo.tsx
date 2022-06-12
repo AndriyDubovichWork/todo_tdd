@@ -1,5 +1,6 @@
-import { Checkbox, FormControlLabel } from '@mui/material';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
+
+import ToDoSticker from './ToDoSticker';
 
 export type TaskType = {
   text: string;
@@ -10,9 +11,14 @@ export type TaskType = {
 type ToDoType = {
   tasks: TaskType[];
   setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
+  Delete: (
+    task: TaskType[],
+    setTasks: Dispatch<SetStateAction<TaskType[]>>,
+    id: number
+  ) => void;
 };
 
-const ToDo = ({ tasks, setTasks }: ToDoType) => {
+const ToDo = ({ tasks, setTasks, Delete }: ToDoType) => {
   const isCheckedHandler = (id: number, tasks: TaskType[]) => {
     const tasksupdate = tasks.map((task) => {
       if (id === task.id) {
@@ -31,23 +37,19 @@ const ToDo = ({ tasks, setTasks }: ToDoType) => {
 
     setTasks(tasksupdate);
   };
+
   return (
     <>
       {tasks.map((task: TaskType) => {
         return (
-          <FormControlLabel
+          <ToDoSticker
             key={task.id}
-            label={task.text}
-            className='column'
-            control={
-              <Checkbox
-                checked={task.isCompleted}
-                onChange={() => {
-                  isCheckedHandler(task.id, tasks);
-                }}
-              />
-            }
-          ></FormControlLabel>
+            task={task}
+            tasks={tasks}
+            isCheckedHandler={isCheckedHandler}
+            Delete={Delete}
+            setTasks={setTasks}
+          />
         );
       })}
     </>

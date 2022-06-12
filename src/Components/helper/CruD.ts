@@ -23,3 +23,13 @@ export const DeleteChecked = (tasks: TaskType[], setTasks: any) => {
   });
   ResetID(tasksCopy, setTasks);
 };
+
+export const Delete = (tasks: TaskType[], setTasks: Dispatch<SetStateAction<TaskType[]>>, id: number) => {
+  let tasksCopy: TaskType[] = [];
+  tasks.map((task: TaskType) => {
+    if (task.id !== id) {
+      tasksCopy.push(task);
+    }
+  });
+  ResetID(tasksCopy, setTasks);
+};

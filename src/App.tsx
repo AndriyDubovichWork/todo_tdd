@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import ToDo, { TaskType } from './Components/ToDo/ToDo';
 import IteractButtons from './Components/IteractButtons/IteractButtons';
-import deepcopy from 'deepcopy';
-import { addToList, DeleteChecked } from './Components/helper/CruD';
+import { addToList, DeleteChecked, Delete } from './Components/helper/CruD';
 
 function App() {
   const [addTask, setAddTask] = useState({
@@ -16,14 +15,19 @@ function App() {
 
   const [isAllSelected, setIsAllSelected]: (boolean | any)[] = useState(false);
 
+  const [isAnySelected, setIsAnySelected]: (boolean | any)[] = useState(false);
+
   useEffect(() => {
     setIsAllSelected(true);
+    setIsAnySelected(false);
     tasks.map((task: TaskType) => {
       if (!task.isCompleted) {
         setIsAllSelected(false);
+      } else {
+        setIsAnySelected(true);
       }
     });
-  }, [tasks]);
+  }, [tasks, isAnySelected]);
 
   return (
     <>
@@ -36,8 +40,9 @@ function App() {
         tasks={tasks}
         isAllSelected={isAllSelected}
         setIsAllSelected={setIsAllSelected}
+        isAnySelected={isAnySelected}
       />
-      <ToDo tasks={tasks} setTasks={setTasks} />
+      <ToDo tasks={tasks} setTasks={setTasks} Delete={Delete} />
     </>
   );
 }
