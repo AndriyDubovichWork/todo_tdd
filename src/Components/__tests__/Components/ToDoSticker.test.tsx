@@ -1,11 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, fireEvent } from '@testing-library/react';
 import ToDoSticker from './../../ToDo/ToDoSticker';
 import { Delete } from './../../helper/CruD';
 import { TaskType } from '../../ToDo/ToDo';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+
 afterEach(() => cleanup());
 configure({ adapter: new Adapter() });
 const task: TaskType = { text: 'hi', id: 0, isCompleted: false };
@@ -111,19 +112,20 @@ describe('pin', () => {
 
     expect(Pin).not.toHaveProperty('transform', 'rotate(20deg)');
   });
-  // test('when task not drageable pin is rotated', () => {
-  //   const wrapper = shallow(
-  //     <ToDoSticker
-  //       task={task}
-  //       tasks={tasks}
-  //       isCheckedHandler={isCheckedHandler}
-  //       Delete={Delete}
-  //       setTasks={setTasks}
-  //     />
-  //   );
-  //   wrapper.instance().setIsDraggeable(false);
-  //   const Pin = wrapper.find({ 'data-testid': 'pin' });
+  test('when task not drageable pin is rotated', () => {
+    render(
+      <ToDoSticker
+        task={task}
+        tasks={tasks}
+        isCheckedHandler={isCheckedHandler}
+        Delete={Delete}
+        setTasks={setTasks}
+      />
+    );
 
-  //   expect(Pin).toHaveProperty('transform', 'rotate(20deg)');
-  // });
+    const Pin = screen.getByTestId('pin');
+    fireEvent.click(Pin);
+    const style = window.getComputedStyle(Pin);
+    expect(style.transform).toBe('rotate(20deg)');
+  });
 });
