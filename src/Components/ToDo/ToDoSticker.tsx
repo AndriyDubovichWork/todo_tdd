@@ -54,6 +54,7 @@ const ToDoSticker = ({
 
         {!isDraggeable ? (
           <PushPinIcon
+            data-testid='pin'
             sx={{ transform: 'rotate(20deg)', cursor: 'pointer' }}
             onClick={() => {
               setIsDraggeable(!isDraggeable);
@@ -61,6 +62,7 @@ const ToDoSticker = ({
           />
         ) : (
           <PushPinIcon
+            data-testid='pin'
             sx={{ cursor: 'pointer' }}
             onClick={() => {
               setIsDraggeable(!isDraggeable);

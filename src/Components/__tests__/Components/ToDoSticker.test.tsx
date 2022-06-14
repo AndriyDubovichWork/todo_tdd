@@ -4,8 +4,10 @@ import { cleanup, render, screen } from '@testing-library/react';
 import ToDoSticker from './../../ToDo/ToDoSticker';
 import { Delete } from './../../helper/CruD';
 import { TaskType } from '../../ToDo/ToDo';
+import { configure, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 afterEach(() => cleanup());
-// @ts-nocheck
+configure({ adapter: new Adapter() });
 const task: TaskType = { text: 'hi', id: 0, isCompleted: false };
 const taskTwo: TaskType = { text: 'hi', id: 1, isCompleted: true };
 
@@ -34,39 +36,94 @@ const isCheckedHandler = (id: number, tasks: TaskType[]) => {
 
   setTasks(tasksupdate);
 };
+describe('main', () => {
+  test('ToDo Sticker have to match snapshot', () => {
+    const tree = renderer
+      .create(
+        <ToDoSticker
+          task={task}
+          tasks={tasks}
+          isCheckedHandler={isCheckedHandler}
+          Delete={Delete}
+          setTasks={setTasks}
+        />,
+        {
+          createNodeMock: () => document.createElement('textarea'),
+        }
+      )
+      .toJSON();
 
-test('ToDo Sticker have to match snapshot', () => {
-  const tree = renderer
-    .create(
+    expect(tree).toMatchSnapshot();
+  });
+});
+describe('check box', () => {
+  test('when task completed checkbox is activated', () => {
+    render(
+      <ToDoSticker
+        task={taskTwo}
+        tasks={tasks}
+        isCheckedHandler={isCheckedHandler}
+        Delete={Delete}
+        setTasks={setTasks}
+      />
+    );
+
+    const CheckBox = screen
+      .getByTestId('check-box')
+      // eslint-disable-next-line testing-library/no-node-access
+      .querySelector('input[type="checkbox"]');
+
+    expect(CheckBox).toHaveProperty('checked', true);
+  });
+
+  test('when task not completed checkbox is not activated', () => {
+    render(
       <ToDoSticker
         task={task}
         tasks={tasks}
         isCheckedHandler={isCheckedHandler}
         Delete={Delete}
         setTasks={setTasks}
-      />,
-      {
-        createNodeMock: () => document.createElement('textarea'),
-      }
-    )
-    .toJSON();
+      />
+    );
 
-  expect(tree).toMatchSnapshot();
+    const CheckBox = screen
+      .getByTestId('check-box')
+      // eslint-disable-next-line testing-library/no-node-access
+      .querySelector('input[type="checkbox"]');
+
+    expect(CheckBox).toHaveProperty('checked', false);
+  });
 });
-test('when task completed checkbox is activated', () => {
-  render(
-    <ToDoSticker
-      task={taskTwo}
-      tasks={tasks}
-      isCheckedHandler={isCheckedHandler}
-      Delete={Delete}
-      setTasks={setTasks}
-    />
-  );
+describe('pin', () => {
+  test('when task drageable pin is straigth', () => {
+    render(
+      <ToDoSticker
+        task={task}
+        tasks={tasks}
+        isCheckedHandler={isCheckedHandler}
+        Delete={Delete}
+        setTasks={setTasks}
+      />
+    );
 
-  const CheckBox = screen
-    .getByTestId('check-box')
-    .querySelector('input[type="checkbox"]');
+    const Pin = screen.getByTestId('pin');
 
-  expect(CheckBox).toHaveProperty('checked', true);
+    expect(Pin).not.toHaveProperty('transform', 'rotate(20deg)');
+  });
+  // test('when task not drageable pin is rotated', () => {
+  //   const wrapper = shallow(
+  //     <ToDoSticker
+  //       task={task}
+  //       tasks={tasks}
+  //       isCheckedHandler={isCheckedHandler}
+  //       Delete={Delete}
+  //       setTasks={setTasks}
+  //     />
+  //   );
+  //   wrapper.instance().setIsDraggeable(false);
+  //   const Pin = wrapper.find({ 'data-testid': 'pin' });
+
+  //   expect(Pin).toHaveProperty('transform', 'rotate(20deg)');
+  // });
 });

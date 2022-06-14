@@ -64,7 +64,7 @@ exports[`ToDo Sticker have to match snapshot 1`] = `
   <svg
     aria-hidden={true}
     className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-lw08pq-MuiSvgIcon-root"
-    data-testid="PushPinIcon"
+    data-testid="pin"
     focusable="false"
     onClick={[Function]}
     viewBox="0 0 24 24"
@@ -102,7 +102,7 @@ exports[`ToDo Sticker have to match snapshot 1`] = `
 </div>
 `;
 
-exports[`when task completed checkbox is activated 1`] = `
+exports[`main ToDo Sticker have to match snapshot 1`] = `
 <div
   className="react-draggable MuiBox-root css-0"
   onMouseDown={[Function]}
@@ -126,6 +126,7 @@ exports[`when task completed checkbox is activated 1`] = `
 >
   <span
     className="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-bsd8mz-MuiButtonBase-root-MuiCheckbox-root"
+    data-testid="check-box"
     onBlur={[Function]}
     onContextMenu={[Function]}
     onDragLeave={[Function]}
@@ -165,7 +166,7 @@ exports[`when task completed checkbox is activated 1`] = `
   <svg
     aria-hidden={true}
     className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-lw08pq-MuiSvgIcon-root"
-    data-testid="PushPinIcon"
+    data-testid="pin"
     focusable="false"
     onClick={[Function]}
     viewBox="0 0 24 24"
