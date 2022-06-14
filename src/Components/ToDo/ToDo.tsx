@@ -37,7 +37,6 @@ const ToDo = ({ tasks, setTasks, Delete }: ToDoType) => {
 
     setTasks(tasksupdate);
   };
-
   return (
     <>
       {tasks.map((task: TaskType) => {

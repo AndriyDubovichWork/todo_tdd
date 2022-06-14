@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "@types/randomcolor": "^0.5.6",
-    "@types/react-input-autosize": "^2.2.1"
+    "@types/react-input-autosize": "^2.2.1",
+    "@types/react-test-renderer": "^18.0.0"
   }
 }

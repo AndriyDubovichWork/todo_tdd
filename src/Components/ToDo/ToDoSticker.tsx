@@ -1,23 +1,15 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useState,
-  useEffect,
-  useRef,
-  useLayoutEffect,
-} from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Draggable from 'react-draggable';
-import { Box, Checkbox, Typography } from '@mui/material';
+import { Box, Checkbox, TextField } from '@mui/material';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import CloseIcon from '@mui/icons-material/Close';
 import { TaskType } from './ToDo';
-import { Resizable } from 're-resizable';
-
+import LinesEllipsis from 'react-lines-ellipsis';
 type ToDoStickerType = {
   task: TaskType;
   tasks: TaskType[];
   isCheckedHandler: (id: number, tasks: TaskType[]) => void;
-  setTasks: Dispatch<SetStateAction<TaskType[]>>;
+  setTasks: any;
   Delete: (
     task: TaskType[],
     setTasks: Dispatch<SetStateAction<TaskType[]>>,
@@ -33,30 +25,12 @@ const ToDoSticker = ({
   setTasks,
 }: ToDoStickerType) => {
   const [isDraggeable, setIsDraggeable] = useState(true);
-  const [size, setSize] = useState({ height: 0, width: 0 });
+  const [isTextCheangeable, setIsTextCheangeable] = useState(false);
 
-  const Sticker = useRef<any>(null);
-  useLayoutEffect(() => {
-    if (!Sticker.current) {
-      return;
-    }
-    console.log(Sticker.current.offsetWidth);
-    let width = Sticker.current.offsetWidth;
-    let height = Sticker.current.offsetHeight;
-    console.log(width, height);
-    if (width >= 3 * height) {
-      width = width * 3;
-    }
-    setSize({
-      width,
-      height,
-    });
-  }, []);
-
+  const cursor = isDraggeable ? 'grab' : 'auto';
   return (
     <Draggable disabled={!isDraggeable} key={task.id}>
       <Box
-        ref={Sticker}
         style={{
           padding: '10px',
           backgroundColor: '#cece',
@@ -64,18 +38,20 @@ const ToDoSticker = ({
           overflowWrap: 'break-word',
           wordWrap: 'break-word',
           hyphens: 'auto',
-          cursor: 'grab',
-          width: size.width,
-          height: size.height,
+          cursor: cursor,
+          width: 200,
+          height: 200,
         }}
       >
         <Checkbox
+          data-testid='check-box'
           checked={task.isCompleted}
           onChange={() => {
             isCheckedHandler(task.id, tasks);
           }}
           sx={{ cursor: 'pointer' }}
         />
+
         {!isDraggeable ? (
           <PushPinIcon
             sx={{ transform: 'rotate(20deg)', cursor: 'pointer' }}
@@ -95,8 +71,24 @@ const ToDoSticker = ({
           sx={{ cursor: 'pointer' }}
           onClick={() => Delete(tasks, setTasks, task.id)}
         />
-
-        <Typography style={{ padding: '5px' }}>{task.text}</Typography>
+        {isTextCheangeable ? (
+          <TextField label='edit task' multiline rows={5} value={task.text} />
+        ) : (
+          <LinesEllipsis
+            text={task.text}
+            onDoubleClick={() => {
+              if (isDraggeable) {
+                return;
+              }
+              setIsTextCheangeable(true);
+            }}
+            maxLine='7'
+            ellipsis='...'
+            trimRight
+            style={{ userSelect: 'none', cursor: cursor }}
+            basedOn='letters'
+          />
+        )}
       </Box>
     </Draggable>
   );
