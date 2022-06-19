@@ -2,6 +2,7 @@
   "name": "todo_tdd",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://andriydubovichwork.github.io/todo_tdd/",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -40,7 +41,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -63,6 +66,7 @@
   "devDependencies": {
     "@types/randomcolor": "^0.5.6",
     "@types/react-input-autosize": "^2.2.1",
-    "@types/react-test-renderer": "^18.0.0"
+    "@types/react-test-renderer": "^18.0.0",
+    "gh-pages": "^4.0.0"
   }
 }
