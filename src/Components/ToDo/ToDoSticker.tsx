@@ -31,6 +31,7 @@ const ToDoSticker = ({
   return (
     <Draggable disabled={!isDraggeable} key={task.id}>
       <Box
+        data-testid={'sticker' + task.id}
         style={{
           padding: '10px',
           backgroundColor: '#cece',
@@ -70,6 +71,7 @@ const ToDoSticker = ({
           />
         )}
         <CloseIcon
+          data-testid={'delete' + task.id}
           sx={{ cursor: 'pointer' }}
           onClick={() => Delete(tasks, setTasks, task.id)}
         />

@@ -7,6 +7,7 @@ exports[`App have to match snapshot 1`] = `
   <div
     className="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
     onKeyDown={[Function]}
+    onSubmit={[Function]}
   >
     <div
       className="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
@@ -16,6 +17,7 @@ exports[`App have to match snapshot 1`] = `
         aria-invalid={false}
         autoFocus={false}
         className="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+        data-testid="text-field"
         disabled={false}
         id=":r0:"
         onAnimationStart={[Function]}
@@ -44,6 +46,7 @@ exports[`App have to match snapshot 1`] = `
   </div>
   <button
     className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled  css-sghohy-MuiButtonBase-root-MuiButton-root"
+    data-testid="add_btn"
     disabled={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -65,6 +68,7 @@ exports[`App have to match snapshot 1`] = `
   </button>
   <button
     className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled  css-sghohy-MuiButtonBase-root-MuiButton-root"
+    data-testid="delete_btn"
     disabled={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -86,6 +90,7 @@ exports[`App have to match snapshot 1`] = `
   </button>
   <button
     className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled  css-sghohy-MuiButtonBase-root-MuiButton-root"
+    data-testid="selectAll_btn"
     disabled={true}
     onBlur={[Function]}
     onClick={[Function]}

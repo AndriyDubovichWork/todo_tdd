@@ -3,6 +3,7 @@
 exports[`main ToDo Sticker have to match snapshot 1`] = `
 <div
   className="react-draggable MuiBox-root css-0"
+  data-testid="sticker0"
   onMouseDown={[Function]}
   onMouseUp={[Function]}
   onTouchEnd={[Function]}
@@ -77,7 +78,7 @@ exports[`main ToDo Sticker have to match snapshot 1`] = `
   <svg
     aria-hidden={true}
     className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-lw08pq-MuiSvgIcon-root"
-    data-testid="CloseIcon"
+    data-testid="delete0"
     focusable="false"
     onClick={[Function]}
     viewBox="0 0 24 24"

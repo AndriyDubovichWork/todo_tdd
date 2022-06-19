@@ -10,7 +10,7 @@ import Adapter from 'enzyme-adapter-react-16';
 afterEach(() => cleanup());
 configure({ adapter: new Adapter() });
 const task: TaskType = { text: 'hi', id: 0, isCompleted: false };
-const taskTwo: TaskType = { text: 'hi', id: 1, isCompleted: true };
+const taskTwo: TaskType = { text: 'hello', id: 1, isCompleted: true };
 
 let tasks: TaskType[] = [
   { text: 'hi', id: 0, isCompleted: false },
@@ -19,6 +19,7 @@ let tasks: TaskType[] = [
 const setTasks = (newtasks: TaskType[]) => {
   tasks = newtasks;
 };
+
 const isCheckedHandler = (id: number, tasks: TaskType[]) => {
   const tasksupdate = tasks.map((task: TaskType) => {
     if (id === task.id) {
@@ -127,5 +128,22 @@ describe('pin', () => {
     fireEvent.click(Pin);
     const style = window.getComputedStyle(Pin);
     expect(style.transform).toBe('rotate(20deg)');
+  });
+});
+describe('delete', () => {
+  test('when click delete element remove from array', () => {
+    render(
+      <ToDoSticker
+        task={taskTwo}
+        tasks={tasks}
+        isCheckedHandler={isCheckedHandler}
+        Delete={Delete}
+        setTasks={setTasks}
+      />
+    );
+
+    const DeleteCross = screen.getByTestId('delete' + taskTwo.id);
+    fireEvent.click(DeleteCross);
+    expect(tasks[0].text).toBe('hi');
   });
 });
