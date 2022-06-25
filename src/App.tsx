@@ -3,6 +3,8 @@ import './App.css';
 import ToDo, { TaskType } from './Components/ToDo/ToDo';
 import IteractButtons from './Components/IteractButtons/IteractButtons';
 import { addToList, DeleteChecked, Delete } from './Components/helper/CruD';
+import { Route, Router, Routes } from 'react-router-dom';
+import FullScreenSticker from './Components/FullScreenSticker/FullScreenSticker';
 
 function App() {
   const [addTask, setAddTask] = useState({
@@ -30,20 +32,35 @@ function App() {
   }, [tasks, isAnySelected]);
 
   return (
-    <>
-      <IteractButtons
-        addToList={addToList}
-        addTask={addTask}
-        setAddTask={setAddTask}
-        setTasks={setTasks}
-        DeleteChecked={DeleteChecked}
-        tasks={tasks}
-        isAllSelected={isAllSelected}
-        setIsAllSelected={setIsAllSelected}
-        isAnySelected={isAnySelected}
+    <Routes>
+      <Route
+        path='/todo_tdd'
+        element={
+          <>
+            <IteractButtons
+              addToList={addToList}
+              addTask={addTask}
+              setAddTask={setAddTask}
+              setTasks={setTasks}
+              DeleteChecked={DeleteChecked}
+              tasks={tasks}
+              isAllSelected={isAllSelected}
+              setIsAllSelected={setIsAllSelected}
+              isAnySelected={isAnySelected}
+            />
+            <ToDo tasks={tasks} setTasks={setTasks} Delete={Delete} />
+          </>
+        }
+      ></Route>
+      <Route
+        path='/todo_tdd/:toDoId'
+        element={
+          <>
+            <FullScreenSticker tasks={tasks} setTasks={setTasks} />
+          </>
+        }
       />
-      <ToDo tasks={tasks} setTasks={setTasks} Delete={Delete} />
-    </>
+    </Routes>
   );
 }
 

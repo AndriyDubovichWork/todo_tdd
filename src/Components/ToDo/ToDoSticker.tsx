@@ -3,8 +3,12 @@ import Draggable from 'react-draggable';
 import { Box, Checkbox, TextField } from '@mui/material';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import CloseIcon from '@mui/icons-material/Close';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import SaveIcon from '@mui/icons-material/Save';
 import { TaskType } from './ToDo';
 import LinesEllipsis from 'react-lines-ellipsis';
+import { useNavigate } from 'react-router-dom';
+import { TaskHandler } from './../helper/TaskHandler';
 type ToDoStickerType = {
   task: TaskType;
   tasks: TaskType[];
@@ -24,6 +28,8 @@ const ToDoSticker = ({
   Delete,
   setTasks,
 }: ToDoStickerType) => {
+  const navigate = useNavigate();
+
   const [isDraggeable, setIsDraggeable] = useState(true);
   const [isTextCheangeable, setIsTextCheangeable] = useState(false);
 
@@ -59,6 +65,7 @@ const ToDoSticker = ({
             sx={{ transform: 'rotate(20deg)', cursor: 'pointer' }}
             onClick={() => {
               setIsDraggeable(!isDraggeable);
+              setIsTextCheangeable(false);
             }}
           />
         ) : (
@@ -70,13 +77,27 @@ const ToDoSticker = ({
             }}
           />
         )}
+        <OpenInFullIcon
+          onClick={() => {
+            navigate('/todo_tdd/' + task.id);
+          }}
+          sx={{ cursor: 'pointer' }}
+        />
         <CloseIcon
           data-testid={'delete' + task.id}
           sx={{ cursor: 'pointer' }}
           onClick={() => Delete(tasks, setTasks, task.id)}
         />
         {isTextCheangeable ? (
-          <TextField label='edit task' multiline rows={5} value={task.text} />
+          <TextField
+            label='edit task'
+            multiline
+            rows={5}
+            value={task.text}
+            onChange={(e) => {
+              TaskHandler(tasks, setTasks, task, e.target.value);
+            }}
+          />
         ) : (
           <LinesEllipsis
             text={task.text}

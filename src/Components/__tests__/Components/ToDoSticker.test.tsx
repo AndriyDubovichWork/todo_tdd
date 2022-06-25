@@ -6,6 +6,8 @@ import { Delete } from './../../helper/CruD';
 import { TaskType } from '../../ToDo/ToDo';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import RoutesTestingHOC from './../../helper/RoutesTestingHOC';
 
 afterEach(() => cleanup());
 configure({ adapter: new Adapter() });
@@ -42,13 +44,16 @@ describe('main', () => {
   test('ToDo Sticker have to match snapshot', () => {
     const tree = renderer
       .create(
-        <ToDoSticker
-          task={task}
-          tasks={tasks}
-          isCheckedHandler={isCheckedHandler}
-          Delete={Delete}
-          setTasks={setTasks}
-        />,
+        <RoutesTestingHOC>
+          <ToDoSticker
+            task={task}
+            tasks={tasks}
+            isCheckedHandler={isCheckedHandler}
+            Delete={Delete}
+            setTasks={setTasks}
+          />
+        </RoutesTestingHOC>,
+
         {
           createNodeMock: () => document.createElement('textarea'),
         }
@@ -61,13 +66,15 @@ describe('main', () => {
 describe('check box', () => {
   test('when task completed checkbox is activated', () => {
     render(
-      <ToDoSticker
-        task={taskTwo}
-        tasks={tasks}
-        isCheckedHandler={isCheckedHandler}
-        Delete={Delete}
-        setTasks={setTasks}
-      />
+      <RoutesTestingHOC>
+        <ToDoSticker
+          task={taskTwo}
+          tasks={tasks}
+          isCheckedHandler={isCheckedHandler}
+          Delete={Delete}
+          setTasks={setTasks}
+        />
+      </RoutesTestingHOC>
     );
 
     const CheckBox = screen
@@ -80,13 +87,15 @@ describe('check box', () => {
 
   test('when task not completed checkbox is not activated', () => {
     render(
-      <ToDoSticker
-        task={task}
-        tasks={tasks}
-        isCheckedHandler={isCheckedHandler}
-        Delete={Delete}
-        setTasks={setTasks}
-      />
+      <RoutesTestingHOC>
+        <ToDoSticker
+          task={task}
+          tasks={tasks}
+          isCheckedHandler={isCheckedHandler}
+          Delete={Delete}
+          setTasks={setTasks}
+        />
+      </RoutesTestingHOC>
     );
 
     const CheckBox = screen
@@ -100,13 +109,15 @@ describe('check box', () => {
 describe('pin', () => {
   test('when task drageable pin is straigth', () => {
     render(
-      <ToDoSticker
-        task={task}
-        tasks={tasks}
-        isCheckedHandler={isCheckedHandler}
-        Delete={Delete}
-        setTasks={setTasks}
-      />
+      <RoutesTestingHOC>
+        <ToDoSticker
+          task={task}
+          tasks={tasks}
+          isCheckedHandler={isCheckedHandler}
+          Delete={Delete}
+          setTasks={setTasks}
+        />
+      </RoutesTestingHOC>
     );
 
     const Pin = screen.getByTestId('pin');
@@ -115,13 +126,15 @@ describe('pin', () => {
   });
   test('when task not drageable pin is rotated', () => {
     render(
-      <ToDoSticker
-        task={task}
-        tasks={tasks}
-        isCheckedHandler={isCheckedHandler}
-        Delete={Delete}
-        setTasks={setTasks}
-      />
+      <RoutesTestingHOC>
+        <ToDoSticker
+          task={task}
+          tasks={tasks}
+          isCheckedHandler={isCheckedHandler}
+          Delete={Delete}
+          setTasks={setTasks}
+        />
+      </RoutesTestingHOC>
     );
 
     const Pin = screen.getByTestId('pin');
@@ -133,13 +146,15 @@ describe('pin', () => {
 describe('delete', () => {
   test('when click delete element remove from array', () => {
     render(
-      <ToDoSticker
-        task={taskTwo}
-        tasks={tasks}
-        isCheckedHandler={isCheckedHandler}
-        Delete={Delete}
-        setTasks={setTasks}
-      />
+      <RoutesTestingHOC>
+        <ToDoSticker
+          task={taskTwo}
+          tasks={tasks}
+          isCheckedHandler={isCheckedHandler}
+          Delete={Delete}
+          setTasks={setTasks}
+        />
+      </RoutesTestingHOC>
     );
 
     const DeleteCross = screen.getByTestId('delete' + taskTwo.id);
